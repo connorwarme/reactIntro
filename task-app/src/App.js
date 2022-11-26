@@ -1,46 +1,29 @@
 import React from 'react';
 import './App.css';
 
-class Input extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <input placeholder='Enter Task'></input>
-    )
-  }
-}
-
-class Submit extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <button type='submit'>Submit</button>
-    )
-  }
-}
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'empty'
+      value: 'empty',
+      tasks: []
     }
+    this.onBtnClick = this.onBtnClick.bind(this);
   }
 
-  onClick() {
-
+  onBtnClick() {
+    this.setState({value: 'full'});
+    const updatedTasks = this.state.tasks.concat('item 1');
+    this.setState({tasks: updatedTasks})
   }
+
   render() {
     return (
       <form>
-        <Input />
-        <Submit />
+        <h1>{this.state.value}</h1>
+        <h2>{this.state.tasks}</h2>
+        <input placeholder='Enter Task'></input>
+        <div className='sub' onClick={this.onBtnClick}>Submit</div>
       </form>
     )
   }

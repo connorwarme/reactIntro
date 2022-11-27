@@ -10,7 +10,7 @@ class List extends React.Component {
           {this.props.tasks.map(
             (task, index) => {
               return (
-                <li key={index}>{task}</li>
+                <li key={index}><input type="checkbox"></input>{task}</li>
               )
             }
           )}

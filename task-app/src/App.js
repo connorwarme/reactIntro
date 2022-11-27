@@ -53,9 +53,11 @@ class App extends React.Component {
     this.setState({tasks: currentVal.concat(this.state.value)});
     console.log(this.state.value);
     e.preventDefault();
-    console.log(e.target.children[0].children[0]);
-    e.target.children[0].children[0].value = ' ';
-    // doesn't clear the input field.. :|
+    this.clearInput();
+  }
+  clearInput() {
+    this.setState({value: ''});
+    document.querySelector('input[type="text"]').value = '';
   }
   render() {
     return (

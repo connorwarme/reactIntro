@@ -21,7 +21,7 @@ import React from 'react';
 //   }
 
   const Overview = (props) => {
-    const { tasks, action, edit, clight } = props;
+    const { tasks, action, edit, clight, save } = props;
     
     return (
       <ul>
@@ -30,9 +30,9 @@ import React from 'react';
           if (editable) {
             return (
               <li key={index} id={task.index}>
-                <form onSubmit={this.props.submit}>
+                <form onSubmit={save}>
                   <label htmlFor='taskEdit'>Edit Task:</label>
-                  <input type="text" id='taskEdit' onChange={clight} value={task.text}/>
+                  <input type="text" id='taskEdit' onChange={clight} placeholder={task.text}/>
                   <button type='submit'>Save</button>
                 </form>
               </li>

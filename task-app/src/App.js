@@ -145,6 +145,7 @@ class App extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.changeLight = this.changeLight.bind(this);
+    this.saveLight = this.saveLight.bind(this);
   }
   handleChange = (e) => {
     this.setState({
@@ -152,13 +153,14 @@ class App extends React.Component {
         text: e.target.value,
         index: this.state.tasks.length + 1,
         edit: false,
+        editText: '',
       }
     });
   }
   changeLight = (e) => {
     this.setState({
       task: {
-        text: e.target.value,
+        editText: e.target.value,
       }
     })
   }
@@ -174,10 +176,12 @@ class App extends React.Component {
     const find = this.state.tasks.find(task => task.index === Number(e.target.parentElement.id));
     console.log(find);
     const copy = [...this.state.tasks];
-    copy[find.index] = this.state.task;
+    copy[find.index-1].text = this.state.task.editText;
+    copy[find.index-1].edit = false;
     this.setState({
       tasks: copy,
     })
+    console.log(this.state.tasks);
   }
   handleDelete = (e) => {
     const current = this.state.tasks;
@@ -196,9 +200,7 @@ class App extends React.Component {
       tasks: copy,
     })
     console.log(this.state.tasks);
-    // not sure how to edit current <li> displayed -> change inner content
-    // then change back upon submit...
-    // e.target.parentElement.removeContent = <Enter change={this.handleChange} submit={this.handleSubmit} task={this.state.task} />
+    
   }
   render() {
     const {task, tasks} = this.state;
@@ -207,12 +209,16 @@ class App extends React.Component {
       <div>
         <Enter change={this.handleChange} submit={this.handleSubmit} task={task} />
         <div>
-        <Overview tasks={tasks} action={this.handleDelete} edit={this.handleEdit} clight={this.changeLight}/>
+        <Overview tasks={tasks} action={this.handleDelete} edit={this.handleEdit} clight={this.changeLight} save={this.saveLight}/>
         </div>
       </div>
     )
   }
 }
+
+// as of right now, I have the tasks as editable. 
+// i get an error: Warning, a component is changing from a controlled input to be uncontrolled. ...
+// need to come back to it later once I have a better understanding of React
 
 {/* <form onSubmit={this.handleSubmit}>
           <label htmlFor='taskInput'>Enter Task:</label>

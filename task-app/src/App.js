@@ -35,6 +35,47 @@ import List from './components/Overview';
 //   }
 // }
 
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       value: '',
+//       tasks: []
+//     }
+//     this.handleChange = this.handleChange.bind(this);
+//     this.handleSubmit = this.handleSubmit.bind(this);
+//     }
+//   handleChange(e) {
+//     this.setState({value: e.target.value});
+//   }
+//   handleSubmit(e) {
+//     const currentVal = this.state.tasks;
+//     this.setState({tasks: currentVal.concat(this.state.value)});
+//     console.log(this.state.value);
+//     e.preventDefault();
+//     this.clearInput();
+//   }
+//   clearInput() {
+//     this.setState({value: ''});
+//     document.querySelector('input[type="text"]').value = '';
+//   }
+//   render() {
+//     return (
+//       <div>
+//         <form onSubmit={this.handleSubmit}>
+//           <label>Enter Task:
+//           <input type="text" value={this.state.value} onChange={this.handleChange} />
+//           </label>
+//           <input type="submit" value="Submit"></input>
+//         </form>
+//         <div>
+//           <List tasks={this.state.tasks} />
+//         </div>
+//       </div>
+//     )
+//   }
+// }
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -44,14 +85,13 @@ class App extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    }
+  }
   handleChange(e) {
     this.setState({value: e.target.value});
   }
   handleSubmit(e) {
-    const currentVal = this.state.tasks;
-    this.setState({tasks: currentVal.concat(this.state.value)});
-    console.log(this.state.value);
+    const current = this.state.tasks;
+    this.setState({tasks: current.concat(this.state.value)});
     e.preventDefault();
     this.clearInput();
   }
@@ -64,16 +104,14 @@ class App extends React.Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <label>Enter Task:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit"></input>
+          <input type="text" onChange={this.handleChange}></input></label>
+          <button type='submit'>Submit</button>
         </form>
         <div>
-          <List tasks={this.state.tasks} />
+          <List tasks={this.state.tasks}></List>
         </div>
       </div>
     )
   }
 }
-
 export default App;

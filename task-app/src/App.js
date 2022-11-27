@@ -115,7 +115,20 @@ import Overview from './components/Overview';
 //     )
 //   }
 // }
-
+class Enter extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <form onSubmit={this.props.submit}>
+        <label htmlFor='taskInput'>Enter Task:</label>
+        <input type="text" id='taskInput' onChange={this.props.change} value={this.props.task.text}/>
+        <button type='submit'>Add Task</button>
+      </form>
+    )
+  }
+}
 class App extends React.Component {
   constructor() {
     super();
@@ -127,6 +140,7 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
   handleChange = (e) => {
     this.setState({
@@ -144,30 +158,36 @@ class App extends React.Component {
     });
   }
   handleDelete = (e) => {
-    console.log(e.target.parentElement.id);
     const current = this.state.tasks;
-    const update = current.filter(task => task.index != e.target.parentElement.id);
-    console.log(update);
+    const update = current.filter(task => task.index !== Number(e.target.parentElement.id));
     this.setState({
       tasks: update,
     })
-    console.log(this.state.tasks);
+  }
+  handleEdit = (e) => {
+    console.log('edit');
+    // not sure how to edit current <li> displayed -> change inner content
+    // then change back upon submit...
+    // e.target.parentElement.removeContent = <Enter change={this.handleChange} submit={this.handleSubmit} task={this.state.task} />
   }
   render() {
     const {task, tasks} = this.state;
 
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor='taskInput'>Enter Task:</label>
-          <input type="text" id='taskInput' onChange={this.handleChange} value={task.text}/>
-          <button type='submit'>Add Task</button>
-        </form>
+        <Enter change={this.handleChange} submit={this.handleSubmit} task={task} />
         <div>
-        <Overview tasks={tasks} action={this.handleDelete}/>
+        <Overview tasks={tasks} action={this.handleDelete} edit={this.handleEdit}/>
         </div>
       </div>
     )
   }
 }
+
+{/* <form onSubmit={this.handleSubmit}>
+          <label htmlFor='taskInput'>Enter Task:</label>
+          <input type="text" id='taskInput' onChange={this.handleChange} value={task.text}/>
+          <button type='submit'>Add Task</button>
+        </form> */}
+
 export default App;

@@ -21,13 +21,17 @@ import React from 'react';
 //   }
 
   const Overview = (props) => {
-    const { tasks, action } = props;
+    const { tasks, action, edit } = props;
 
     return (
       <ul>
         {tasks.map((task, index) => {
-          return <li key={index} id={task.index}>{index+1}: {task.text} <button onClick={action}>Delete</button></li>;
-        })}
+          return (
+            <li key={index} id={task.index}>
+            {index+1}: {task.text} <button onClick={action}>Delete</button>
+            <button onClick={edit}>Edit</button>
+            </li>
+        )})}
       </ul>
     )
   }

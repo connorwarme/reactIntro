@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import List from './components/Overview';
+// import List from './components/Overview';
 import Overview from './components/Overview';
 
 
@@ -126,11 +126,13 @@ class App extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   handleChange = (e) => {
     this.setState({
       task: {
         text: e.target.value,
+        index: this.state.tasks.length + 1,
       }
     });
   }
@@ -140,6 +142,16 @@ class App extends React.Component {
       tasks: this.state.tasks.concat(this.state.task),
       task: { text: '' },
     });
+  }
+  handleDelete = (e) => {
+    console.log(e.target.parentElement.id);
+    const current = this.state.tasks;
+    const update = current.filter(task => task.index != e.target.parentElement.id);
+    console.log(update);
+    this.setState({
+      tasks: update,
+    })
+    console.log(this.state.tasks);
   }
   render() {
     const {task, tasks} = this.state;
@@ -152,7 +164,7 @@ class App extends React.Component {
           <button type='submit'>Add Task</button>
         </form>
         <div>
-        <Overview tasks={tasks} />
+        <Overview tasks={tasks} action={this.handleDelete}/>
         </div>
       </div>
     )

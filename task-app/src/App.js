@@ -134,21 +134,33 @@ class App extends React.Component {
     super();
 
     this.state = {
-      task: { text: ''},
+      task: { 
+        text: '', 
+        // edit: false,
+      },
       tasks: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.changeLight = this.changeLight.bind(this);
   }
   handleChange = (e) => {
     this.setState({
       task: {
         text: e.target.value,
         index: this.state.tasks.length + 1,
+        edit: false,
       }
     });
+  }
+  changeLight = (e) => {
+    this.setState({
+      task: {
+        text: e.target.value,
+      }
+    })
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -156,6 +168,16 @@ class App extends React.Component {
       tasks: this.state.tasks.concat(this.state.task),
       task: { text: '' },
     });
+  }
+  saveLight = (e) => {
+    e.preventDefault();
+    const find = this.state.tasks.find(task => task.index === Number(e.target.parentElement.id));
+    console.log(find);
+    const copy = [...this.state.tasks];
+    copy[find.index] = this.state.task;
+    this.setState({
+      tasks: copy,
+    })
   }
   handleDelete = (e) => {
     const current = this.state.tasks;
@@ -165,7 +187,15 @@ class App extends React.Component {
     })
   }
   handleEdit = (e) => {
-    console.log('edit');
+    console.log(e.target);
+    const find = this.state.tasks.find(task => task.index === Number(e.target.parentElement.id));
+    console.log(find);
+    const copy = [...this.state.tasks];
+    copy[find.index-1].edit = true;
+    this.setState({
+      tasks: copy,
+    })
+    console.log(this.state.tasks);
     // not sure how to edit current <li> displayed -> change inner content
     // then change back upon submit...
     // e.target.parentElement.removeContent = <Enter change={this.handleChange} submit={this.handleSubmit} task={this.state.task} />
@@ -177,7 +207,7 @@ class App extends React.Component {
       <div>
         <Enter change={this.handleChange} submit={this.handleSubmit} task={task} />
         <div>
-        <Overview tasks={tasks} action={this.handleDelete} edit={this.handleEdit}/>
+        <Overview tasks={tasks} action={this.handleDelete} edit={this.handleEdit} clight={this.changeLight}/>
         </div>
       </div>
     )

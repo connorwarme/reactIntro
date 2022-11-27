@@ -21,11 +21,23 @@ import React from 'react';
 //   }
 
   const Overview = (props) => {
-    const { tasks, action, edit } = props;
-
+    const { tasks, action, edit, clight } = props;
+    
     return (
       <ul>
         {tasks.map((task, index) => {
+          const editable = task.edit;
+          if (editable) {
+            return (
+              <li key={index} id={task.index}>
+                <form onSubmit={this.props.submit}>
+                  <label htmlFor='taskEdit'>Edit Task:</label>
+                  <input type="text" id='taskEdit' onChange={clight} value={task.text}/>
+                  <button type='submit'>Save</button>
+                </form>
+              </li>
+            )
+          }
           return (
             <li key={index} id={task.index}>
             {index+1}: {task.text} <button onClick={action}>Delete</button>

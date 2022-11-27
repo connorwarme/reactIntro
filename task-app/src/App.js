@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import List from './components/Overview';
+import Overview from './components/Overview';
 
 
 // class App extends React.Component {
@@ -76,39 +77,82 @@ import List from './components/Overview';
 //   }
 // }
 
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       value: '',
+//       tasks: []
+//     }
+//     this.handleChange = this.handleChange.bind(this);
+//     this.handleSubmit = this.handleSubmit.bind(this);
+//   }
+//   handleChange(e) {
+//     this.setState({value: e.target.value});
+//   }
+//   handleSubmit(e) {
+//     const current = this.state.tasks;
+//     this.setState({tasks: current.concat(this.state.value)});
+//     e.preventDefault();
+//     this.clearInput();
+//   }
+//   clearInput() {
+//     this.setState({value: ''});
+//     document.querySelector('input[type="text"]').value = '';
+//   }
+//   render() {
+//     return (
+//       <div>
+//         <form onSubmit={this.handleSubmit}>
+//           <label>Enter Task:
+//           <input type="text" onChange={this.handleChange}></input></label>
+//           <button type='submit'>Submit</button>
+//         </form>
+//         <div>
+//           <List tasks={this.state.tasks}></List>
+//         </div>
+//       </div>
+//     )
+//   }
+// }
+
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
     this.state = {
-      value: '',
-      tasks: []
-    }
+      task: { text: ''},
+      tasks: [],
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleChange(e) {
-    this.setState({value: e.target.value});
+  handleChange = (e) => {
+    this.setState({
+      task: {
+        text: e.target.value,
+      }
+    });
   }
-  handleSubmit(e) {
-    const current = this.state.tasks;
-    this.setState({tasks: current.concat(this.state.value)});
+  handleSubmit = (e) => {
     e.preventDefault();
-    this.clearInput();
-  }
-  clearInput() {
-    this.setState({value: ''});
-    document.querySelector('input[type="text"]').value = '';
+    this.setState({
+      tasks: this.state.tasks.concat(this.state.task),
+      task: { text: '' },
+    });
   }
   render() {
+    const {task, tasks} = this.state;
+
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <label>Enter Task:
-          <input type="text" onChange={this.handleChange}></input></label>
-          <button type='submit'>Submit</button>
+          <label htmlFor='taskInput'>Enter Task:</label>
+          <input type="text" id='taskInput' onChange={this.handleChange} value={task.text}/>
+          <button type='submit'>Add Task</button>
         </form>
         <div>
-          <List tasks={this.state.tasks}></List>
+        <Overview tasks={tasks} />
         </div>
       </div>
     )

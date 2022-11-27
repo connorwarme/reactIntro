@@ -1,9 +1,9 @@
 import React from 'react';
 
 class List extends React.Component {
-    // constructor(props) {
-    //   super(props);
-    // }
+      // constructor(props) {
+      //   super(props);
+      // }
     render() {
       return (
         <ul>
@@ -19,4 +19,16 @@ class List extends React.Component {
     }
   }
 
-  export default List;
+  const Overview = (props) => {
+    const { tasks } = props;
+
+    return (
+      <ul>
+        {tasks.map((task, index) => {
+          return <li key={index}>{task.text}</li>;
+        })}
+      </ul>
+    )
+  }
+
+  export default Overview;
